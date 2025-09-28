@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thesis Citation Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <h1>📚 Thesis Citation Converter</h1>
+                        <p>Convert between academic citation styles instantly</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-outline" id="formatDetectorBtn">
+                            🔍 Auto-Detect Format
+                        </button>
+                        <button class="btn btn-primary" id="convertBtn" disabled>
+                            Convert Citations
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Format Selection -->
+                <section class="format-selection">
+                    <div class="format-grid">
+                        <div class="format-item">
+                            <label for="fromFormat" class="format-label">From Format</label>
+                            <select id="fromFormat" class="format-select">
+                                <option value="">Select source format</option>
+                                <option value="apa">APA (7th Edition)</option>
+                                <option value="mla">MLA (9th Edition)</option>
+                                <option value="chicago">Chicago/Turabian</option>
+                                <option value="ieee">IEEE</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="turabian">Turabian</option>
+                            </select>
+                        </div>
+                        <div class="format-arrow">→</div>
+                        <div class="format-item">
+                            <label for="toFormat" class="format-label">To Format</label>
+                            <select id="toFormat" class="format-select">
+                                <option value="">Select target format</option>
+                                <option value="apa">APA (7th Edition)</option>
+                                <option value="mla">MLA (9th Edition)</option>
+                                <option value="chicago">Chicago/Turabian</option>
+                                <option value="ieee">IEEE</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="turabian">Turabian</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Citation Input -->
+                <section class="citation-input">
+                    <div class="input-header">
+                        <h2>Enter Your Citations</h2>
+                        <div class="input-actions">
+                            <button class="btn btn-sm btn-outline" id="clearBtn">Clear All</button>
+                            <button class="btn btn-sm btn-outline" id="exampleBtn">Load Example</button>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <textarea 
+                            id="citationInput" 
+                            placeholder="Paste your citations here, one per line...&#10;&#10;Example:&#10;Smith, J. (2023). The Future of Academic Writing. Journal of Research, 15(3), 123-145."
+                            rows="8"
+                        ></textarea>
+                        <div class="input-footer">
+                            <span class="char-count" id="charCount">0 characters</span>
+                            <span class="citation-count" id="citationCount">0 citations</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section class="results" id="resultsSection" style="display: none;">
+                    <div class="results-header">
+                        <h2>Conversion Results</h2>
+                        <div class="results-actions">
+                            <button class="btn btn-sm btn-outline" id="copyAllBtn">Copy All</button>
+                            <button class="btn btn-sm btn-outline" id="downloadBtn">Download</button>
+                        </div>
+                    </div>
+                    <div class="results-content" id="resultsContent">
+                        <!-- Results will be populated here -->
+                    </div>
+                </section>
+
+                <!-- Format Detection Modal -->
+                <div class="modal" id="formatDetectorModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Auto-Detect Citation Format</h3>
+                            <button class="modal-close" id="closeDetectorModal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="detector-input">
+                                <label for="detectorInput">Enter a citation to detect its format:</label>
+                                <textarea 
+                                    id="detectorInput" 
+                                    placeholder="Paste a citation here to detect its format..."
+                                    rows="4"
+                                ></textarea>
+                            </div>
+                            <div class="detector-result" id="detectorResult" style="display: none;">
+                                <div class="detected-format">
+                                    <strong>Detected Format:</strong>
+                                    <span id="detectedFormat">-</span>
+                                    <span class="confidence" id="confidence">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline" id="cancelDetector">Cancel</button>
+                            <button class="btn btn-primary" id="detectFormat">Detect Format</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading Overlay -->
+                <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p>Converting citations...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <p>&copy; 2024 Thesis Citation Converter. Supporting APA, MLA, Chicago, IEEE, Harvard, Vancouver, and Turabian formats.</p>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="#" class="footer-link">Help</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
